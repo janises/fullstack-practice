@@ -11,4 +11,6 @@ app.use(cors())
 //ENPOINT
 app.get('/api/message', msgCtrl.getMessage)
 
+app.put('/api/message', msgCtrl.updateMessage)
+
 app.listen(port, _=>{console.log('(I)...(I) '+port)})

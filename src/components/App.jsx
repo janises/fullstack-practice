@@ -14,9 +14,12 @@ export default class App extends Component {
 
 		this.state={
 			URL: 'http://localhost:3001/api/message',
-			message: ''
+			message: '',
+			update: ''
 		}
 		this.getMessage=this.getMessage.bind(this)
+		this.update=this.update.bind(this)
+		this.updateMessage=this.updateMessage.bind(this)
 	}
 
 	getMessage(){
@@ -25,7 +28,19 @@ export default class App extends Component {
 				message: response.data
 			})
 		})
-		//set state
+	}
+
+	updateMessage(val){
+		axios.put(this.state.URL, {update: this.state.update}).then(response=>{
+			let { message }=response.data
+			this.setState({
+				message
+			})
+		})
+	}
+
+	update(event){
+		this.setState({update: event.target.value})
 	}
 
 	render(){
@@ -34,6 +49,8 @@ export default class App extends Component {
 				<p>this is App.jsx</p>
 				<Compy />
 				<button onClick={this.getMessage}>Get Message</button>
+				<input type="text" className="update" value={this.state.update} onChange={this.update}/>
+				<button onClick={this.updateMessage}>Update Message</button>
 				{this.state.message &&
 					<p>{this.state.message}</p>}
 			</div>
